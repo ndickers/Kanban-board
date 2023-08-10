@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css">
+
+    <title>Kanban board</title>
+</head>
+<body>
+    <main id="main">
+        <header>
+            <h1>Kanban Board</h1>
+        </header>
+        <div class="flex-section">
+            <section>
+                <a class="links-head" id="todo-link" href="http://">Todo<span>4</span></a>
+                <div>
+                    <article>
+                        <p class="project-type">UI Design</p>
+                        <h2 class="project-title">A/B Testing</h2>
+                        <p class="project-content">We cannot solve problems with the kind of thinking we employed when...</p>
+                        <div class="line"></div>
+                        <div class="flex-images">
+                            <img src="./images/Frame 199.png" alt="" srcset="">
+                            <button>
+                                <img src="./images/trash.svg" alt="" srcset="">
+                            </button>
+                        </div>
+                    </article>
+                    <article>
+                        <p class="project-type">UI Design</p>
+                        <h2 class="project-title">A/B Testing</h2>
+                        <p class="project-content">We cannot solve problems with the kind of thinking we employed when...</p>
+                        <div class="line"></div>
+                        <div class="flex-images">
+                            <img src="./images/Frame 199.png" alt="" srcset="">
+                            <button>
+                                <img src="./images/trash.svg" alt="" srcset="">
+                            </button>
+                        </div>
+                    </article>
+                    
+                </div>
+            </section>
+            <section>
+                <a class="links-head progress-link" href="http://">In Progess<span style="background:var(--color-progress-fade)">3</span> </a>
+                <div>
+                    <article>
+                        <p class="project-type">UI Design</p>
+                        <h2 class="project-title">A/B Testing</h2>
+                        <p class="project-content">We cannot solve problems with the kind of thinking we employed when...</p>
+                        <div class="line"></div>
+                        <div class="flex-images">
+                            <img src="./images/Frame 199.png" alt="" srcset="">
+                            <button>
+                                <img src="./images/trash.svg" alt="" srcset="">
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section>
+                <a class="links-head review-link" href="http://">In Review <span style="background:var(--color-review-fade)">2</span></a>
+                <div>
+                    <article>
+                        <p class="project-type">UI Design</p>
+                        <h2 class="project-title">A/B Testing</h2>
+                        <p class="project-content">We cannot solve problems with the kind of thinking we employed when...</p>
+                        <div class="line"></div>
+                        <div class="flex-images">
+                            <img src="./images/Frame 199.png" alt="" srcset="">
+                            <button>
+                                <img src="./images/trash.svg" alt="" srcset="">
+                            </button>
+                        </div>
+                    </article>
+                    <article>
+                        <p class="project-type">UI Design</p>
+                        <h2 class="project-title">A/B Testing</h2>
+                        <p class="project-content">We cannot solve problems with the kind of thinking we employed when...</p>
+                        <div class="line"></div>
+                        <div class="flex-images">
+                            <img src="./images/Frame 199.png" alt="" srcset="">
+                            <button>
+                                <img src="./images/trash.svg" alt="" srcset="">
+                            </button>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section>
+                <a class="links-head done-link" href="http://">Done <span style="background:var(--color-done-fade)">0</span></a>
+                <div></div>
+            </section>
+        </div>
+        
+        <!-- <div class="opacity-bg">  
+        </div> -->
+        <!-- <form action="" class="add-project-form">
+            <p class="form-header">Add project Todo</p>
+            <label for="project-type">Enter project type</label>
+            <input type="text" id="project-type">
+            <label for="project-title">Enter project title</label>
+            <input type="text" id="project-title" >
+            <label for="project-type">Describe the project</label>
+            <textarea name="" id="" cols="30" rows="10"></textarea>
+            <button type="submit" class="submit">Add project</button>
+        </form> -->
+        <!-- <form action="" class="verification-form">
+            <p class="form-header">Verify yourself</p>
+            <input id="verification" type="text">
+            <button type="submit" class="submit">Verify</button>
+        </form> -->
+    </main>
+    
+    <script src="./index.js" type="module"></script>
+</body>
+</html>
