@@ -3,6 +3,7 @@
   --white: hsla(0, 0%, 100%, 1);
   --very-dark: hsla(0, 0%, 13%, 1);
   --gray: hsla(0, 1%, 50%, 1);
+  --gray-section:hsla(0, 1%, 50%, 0.2);
   --body-bg-color: hsla(220, 43%, 97%, 1);
   --color-todo: hsla(220, 28%, 62%, 1);
   --color-todo-fade: hsla(220, 28%, 78%, 1);
@@ -43,8 +44,23 @@ h1 {
 section {
   inline-size: 18rem;
 }
+.flex-todo-heading{
+  inline-size: 17.125rem;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content:space-between;
+  align-items: center;
+}
+#in-progress-section, #in-review-section,#todo-section,#done-section{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius:0.8rem;
+}
 
-.links-head {
+.section-head{
   white-space: nowrap;
   display: inline-block;
   border-radius: 4rem;
@@ -53,6 +69,19 @@ section {
   text-decoration: none;
   color: var(--white);
   background: var(--color-todo);
+}
+.add-btn{
+  display: block;
+  text-decoration: none;
+  padding:0.5rem 0.65rem;
+  background-color:var(--white);
+  font-size:2.5rem;
+  color:var(--very-dark);
+  border-radius: 100%;
+}
+.add-btn:hover{
+  background: var(--very-dark);
+  color: var(--white);
 }
 .progress-link {
   background: var(--color-progress);
