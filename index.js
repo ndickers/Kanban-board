@@ -15,6 +15,7 @@ async function fetchDataOnLoad() {
   const getTodoSectionArticles = document.querySelectorAll(
     "#todo-section article"
   );
+  setDraggableAtt(getTodoSectionArticles);
   dragStart(getTodoSectionArticles);
   // deleting article
   const deleteTodos = document.querySelectorAll("#todo-section button");
@@ -28,6 +29,45 @@ async function fetchDataOnLoad() {
   await dropToTarget(progressSec,todoProgressUrl);
   const deleteProgress = document.querySelectorAll("#in-progress-section .delete-btn");
   await deleteArticle(deleteProgress,todoProgressUrl.url2);
+    // end progress section
+  // -------------------------------------------------
+
+  // load review section data
+  const getProgressSectionArticles = document.querySelectorAll(
+    "#in-progress-section article"
+  );
+  setDraggableAtt(getProgressSectionArticles);
+
+  const progReviewUrl = {
+    url1:todoProgressUrl.url2,
+    url2:"https://64de658a825d19d9bfb28fd2.mockapi.io/prog-proje/review"
+  };
+  dragStart(getProgressSectionArticles);
+  const inReviewSec = document.querySelector("#in-review-section");
+  await loadApiData(progReviewUrl.url2, inReviewSec);
+  await dropToTarget(inReviewSec,progReviewUrl);
+  const deleteReview = document.querySelectorAll("#in-review-section .delete-btn");
+  await deleteArticle(deleteReview,progReviewUrl.url2);
+  // end review section data
+// -----------------------------------------------
+
+// start done section data load
+
+const getReviewSectionArticles = document.querySelectorAll(
+  "#in-review-section article"
+);
+setDraggableAtt(getReviewSectionArticles);
+
+const reviewDoneUrl = {
+  url1:progReviewUrl.url2,
+  url2:"https://64e507a7c555638029140f2a.mockapi.io/done"
+};
+dragStart(getReviewSectionArticles);
+const inDoneSec = document.querySelector("#done-section");
+await loadApiData(reviewDoneUrl.url2, inDoneSec);
+await dropToTarget(inDoneSec,reviewDoneUrl);
+const deleteDone = document.querySelectorAll("#done-section .delete-btn");
+await deleteArticle(deleteDone,reviewDoneUrl.url2);
 }
 
 async function loadApiData(url, sectionToAddArticle) {
@@ -86,6 +126,12 @@ function verificationForm() {
   return verificationFormContent;
 }
 
+// set attribute to draggable
+function setDraggableAtt(articles){
+  articles.forEach(article => {
+    article.setAttribute("draggable","true");
+  })
+}
 
 function opaqueBg() {
   const opacityBg = document.createElement("div");
@@ -192,7 +238,7 @@ function getDataFromApi(url) {
 function createArticle(project) {
   const article = document.createElement("article");
   article.setAttribute("id", `article-${project.id}`);
-  article.setAttribute("draggable", "true");
+  // article.setAttribute("draggable", "true");
   const articleContent = `<p class="project-type">${project.type}</p>
     <h2 class="project-title">${project.title}</h2>
     <p class="project-content">
@@ -200,7 +246,7 @@ function createArticle(project) {
     </p>
     <div class="line"></div>
     <div class="flex-images">
-      <img src="./images/Frame 199.png" alt="" srcset="" />
+      <img class="image-profile" src="./images/ndickers-logo.png" alt="" srcset="" />
       <button  class="delete-btn" getDeleteId=${project.id}>
         <img src="./images/trash.svg" alt="" srcset="" />
       </button>
@@ -238,8 +284,11 @@ function errorHandling(message) {
 function dragStart(allArticles) {
   allArticles.forEach((article) => {
     article.addEventListener("dragstart", function (event) {
-      event.dataTransfer.setData("text/plain", event.target.id);
-      console.log(event.target.id);
+      event.dataTransfer.setData("text/plain", article.id);
+      
+    });
+    article.addEventListener("dragend", function (event) {
+      event.dataTransfer.clearData("text/plain");
     });
   });
 }
@@ -249,7 +298,7 @@ function dragStart(allArticles) {
 function dropToTarget(targetSection,urlObj) {
   targetSection.addEventListener("dragenter", function (e) {
     e.preventDefault();
-    e.dataTransfer.setData("text/plain", e.target.id);
+    e.dataTransfer.setData("text/plain", targetSection.id);
   });
 
   targetSection.addEventListener("dragover", function (e) {
@@ -280,32 +329,3 @@ function dropToTarget(targetSection,urlObj) {
   });
 }
 
-// progressSection.addEventListener("drop", function (e) {
-//   e.preventDefault();
-//   const draggedElementId = e.dataTransfer.getData("text/plain");
-//   const getDraggedElement = document.getElementById(draggedElementId);
-
-//   const projectContent = {
-//     type: getDraggedElement.childNodes[0].innerText,
-//     title: getDraggedElement.childNodes[2].innerText,
-//     description: getDraggedElement.childNodes[4].innerText,
-//   };
-
-//   const [, elemId] = draggedElementId.split("-");
-
-//   // store the dragged element to another collection
-//   postDataToApi(
-//     "https://64de658a825d19d9bfb28fd2.mockapi.io/prog-proje/progressection",
-//     projectContent,
-//     e.target
-//   );
-//   // delete from the previous collection
-//   deleteDataFromApi(
-//     `https://64b6b8aadf0839c97e16081a.mockapi.io/todo/${elemId}`
-//   ).then((res) => {
-//     if (res.statusText == "OK") {
-//       document.getElementById(`article-${elemId}`).remove();
-//     }
-//   });
-//   // remove the element from dom
-// });

@@ -83,6 +83,12 @@ section {
   background: var(--very-dark);
   color: var(--white);
 }
+.image-profile{
+  inline-size: 2rem;
+  block-size:2rem;
+  background:black;
+  border-radius: 100%;
+}
 .progress-link {
   background: var(--color-progress);
 }
