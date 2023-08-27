@@ -55,6 +55,7 @@ section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-inline-size: 17.125rem;
   inline-size: 100%;
   block-size: 100%;
   border-radius:0.8rem;
@@ -226,6 +227,12 @@ textarea {
   inline-size: 100%;
   border-radius: 0.5rem;
   block-size: 10rem;
+}
+.notask-text{
+  margin-inline-end: auto;
+  margin-inline-start:1rem;
+  margin-block-start:1rem;
+  color: hsla(0, 1%, 50%, 1);
 }
 .submit {
   margin-block-start: 0.7rem;

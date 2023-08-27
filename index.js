@@ -5,10 +5,10 @@ window.addEventListener("DOMContentLoaded", fetchDataOnLoad);
 async function fetchDataOnLoad() {
   // load data in todosection
   const todoProgressUrl = {
-    url1:"https://64b6b8aadf0839c97e16081a.mockapi.io/todo",
-    url2:"https://64de658a825d19d9bfb28fd2.mockapi.io/prog-proje/progressection"
+    url1: "https://64b6b8aadf0839c97e16081a.mockapi.io/todo",
+    url2: "https://64de658a825d19d9bfb28fd2.mockapi.io/prog-proje/progressection",
   };
-    
+
   const todoSection = document.querySelector("#todo-section");
   await loadApiData(todoProgressUrl.url1, todoSection);
   // get articles in todo section
@@ -19,17 +19,19 @@ async function fetchDataOnLoad() {
   dragStart(getTodoSectionArticles);
   // deleting article
   const deleteTodos = document.querySelectorAll("#todo-section button");
-  await deleteArticle(deleteTodos,todoProgressUrl.url1);
+  await deleteArticle(deleteTodos, todoProgressUrl.url1);
 
   // ----------------------------------------
   // load data in in progress section
-  
+
   const progressSec = document.querySelector("#in-progress-section");
   await loadApiData(todoProgressUrl.url2, progressSec);
-  await dropToTarget(progressSec,todoProgressUrl);
-  const deleteProgress = document.querySelectorAll("#in-progress-section .delete-btn");
-  await deleteArticle(deleteProgress,todoProgressUrl.url2);
-    // end progress section
+  await dropToTarget(progressSec, todoProgressUrl);
+  const deleteProgress = document.querySelectorAll(
+    "#in-progress-section .delete-btn"
+  );
+  await deleteArticle(deleteProgress, todoProgressUrl.url2);
+  // end progress section
   // -------------------------------------------------
 
   // load review section data
@@ -39,43 +41,71 @@ async function fetchDataOnLoad() {
   setDraggableAtt(getProgressSectionArticles);
 
   const progReviewUrl = {
-    url1:todoProgressUrl.url2,
-    url2:"https://64de658a825d19d9bfb28fd2.mockapi.io/prog-proje/review"
+    url1: todoProgressUrl.url2,
+    url2: "https://64de658a825d19d9bfb28fd2.mockapi.io/prog-proje/review",
   };
   dragStart(getProgressSectionArticles);
   const inReviewSec = document.querySelector("#in-review-section");
   await loadApiData(progReviewUrl.url2, inReviewSec);
-  await dropToTarget(inReviewSec,progReviewUrl);
-  const deleteReview = document.querySelectorAll("#in-review-section .delete-btn");
-  await deleteArticle(deleteReview,progReviewUrl.url2);
+  await dropToTarget(inReviewSec, progReviewUrl);
+  const deleteReview = document.querySelectorAll(
+    "#in-review-section .delete-btn"
+  );
+  await deleteArticle(deleteReview, progReviewUrl.url2);
   // end review section data
-// -----------------------------------------------
+  // -----------------------------------------------
 
-// start done section data load
+  // start done section data load
 
-const getReviewSectionArticles = document.querySelectorAll(
-  "#in-review-section article"
-);
-setDraggableAtt(getReviewSectionArticles);
+  const getReviewSectionArticles = document.querySelectorAll(
+    "#in-review-section article"
+  );
+  setDraggableAtt(getReviewSectionArticles);
 
-const reviewDoneUrl = {
-  url1:progReviewUrl.url2,
-  url2:"https://64e507a7c555638029140f2a.mockapi.io/done"
-};
-dragStart(getReviewSectionArticles);
-const inDoneSec = document.querySelector("#done-section");
-await loadApiData(reviewDoneUrl.url2, inDoneSec);
-await dropToTarget(inDoneSec,reviewDoneUrl);
-const deleteDone = document.querySelectorAll("#done-section .delete-btn");
-await deleteArticle(deleteDone,reviewDoneUrl.url2);
+  const reviewDoneUrl = {
+    url1: progReviewUrl.url2,
+    url2: "https://64e507a7c555638029140f2a.mockapi.io/done",
+  };
+  dragStart(getReviewSectionArticles);
+  const inDoneSec = document.querySelector("#done-section");
+  await loadApiData(reviewDoneUrl.url2, inDoneSec);
+  await dropToTarget(inDoneSec, reviewDoneUrl);
+  const deleteDone = document.querySelectorAll("#done-section .delete-btn");
+  await deleteArticle(deleteDone, reviewDoneUrl.url2);
 }
 
 async function loadApiData(url, sectionToAddArticle) {
+  // gets data from api
   const dataContent = await getDataFromApi(url);
-  dataContent.forEach((data) => {
-    const newArticle = createArticle(data);
-    sectionToAddArticle.appendChild(newArticle);
-  });
+
+  const noTaskP = document.createElement("p");
+
+  // checks if the array data from api is empty
+  if (dataContent.length == 0) {
+    // if empty, we add text in the paragraph created above and append it to
+    // a div where aticle was supposed to be added
+    noTaskP.textContent = "No task yet";
+    noTaskP.classList.add("notask-text");
+    sectionToAddArticle.appendChild(noTaskP);
+
+    // We then get the section heading and update it to 0 since there is no task added yet
+    sectionToAddArticle.parentNode.firstElementChild.childNodes[1].firstElementChild.textContent =
+      "0";
+  } else {
+    //check if data fetched from api is available,
+    dataContent.forEach((data) => {
+      // we create new html article using the data
+      const newArticle = createArticle(data);
+      // we then append the newly created article in the specified section(todo/in progress/in review /done)
+      sectionToAddArticle.appendChild(newArticle);
+      // after appending article we remove the "no task" paragraph created and make 
+      // the new aticlem the fistchild element of the specified section
+      noTaskP.remove();
+      // update the section heading to with the number of children
+      sectionToAddArticle.parentNode.firstElementChild.childNodes[1].firstElementChild.textContent =
+        sectionToAddArticle.children.length;
+    });
+  }
 }
 
 // display verification form on clicking each header link
@@ -127,10 +157,10 @@ function verificationForm() {
 }
 
 // set attribute to draggable
-function setDraggableAtt(articles){
-  articles.forEach(article => {
-    article.setAttribute("draggable","true");
-  })
+function setDraggableAtt(articles) {
+  articles.forEach((article) => {
+    article.setAttribute("draggable", "true");
+  });
 }
 
 function opaqueBg() {
@@ -140,31 +170,10 @@ function opaqueBg() {
   return opacityBg;
 }
 
-
 function removeFormAndBg() {
   document.getElementById("form").remove();
   document.getElementById("bg-opacity").remove();
 }
-
-// function verifiedFunction(event) {
-//   event.preventDefault();
-//   const passCodeValue = document.getElementById("verification");
-//   const form = document.getElementById("form");
-
-//   if (passCodeValue.value == verificationKey) {
-//     passCodeValue.remove();
-//     form.innerHTML = addProjectForm("form-header");
-//     const opacityBg = document.getElementById("bg-opacity");
-//     opacityBg.addEventListener("click", removeFormAndBg);
-//     document.querySelector(".submit").addEventListener("click", addProject);
-//   } else {
-//     form.style.animation = "shakeForm 1.2s linear";
-//     document.getElementById("verification").style.animation =
-//       "inputColorShake 1.2s linear";
-//     document.querySelector(".submit").style.animation =
-//       "btnBgColor 1.2s linear";
-//   }
-// }
 
 function addProjectFormContent() {
   const projectFormData = `<p class="form-header">Add project Todo</p>
@@ -192,6 +201,7 @@ function addProject() {
   );
 }
 
+
 function postDataToApi(url, projectToPost, elementToAppend) {
   const requestObj = {
     method: "POST",
@@ -200,9 +210,24 @@ function postDataToApi(url, projectToPost, elementToAppend) {
   };
   fetch(url, requestObj).then((res) => {
     console.log(res);
+     // check if data is posted succesfully
     if (res.statusText == "Created") {
       res.json().then((data) => {
-        elementToAppend.appendChild(createArticle(data));
+      //  check if section to add article, has any available "notask" paragraph
+        if (elementToAppend.firstElementChild.nodeName == "P") {
+          // if it has  a paragraph, create a new article using data posted to api
+          // then replace the no task paragraph with new article
+          elementToAppend.replaceChild(
+            createArticle(data),
+            elementToAppend.firstElementChild
+          );
+        } else {
+          // if it has an article, append the new article at the bottom of the section
+          elementToAppend.appendChild(createArticle(data));
+        }
+        // then update the header of the articles section with the number of children
+        elementToAppend.parentNode.firstElementChild.firstElementChild.firstElementChild.textContent =
+          elementToAppend.children.length;
       });
     } else {
       errorHandling("Error connecting with server. Try again later");
@@ -222,18 +247,6 @@ function getDataFromApi(url) {
     }
   });
 }
-
-// get data from api and return a promise
-// function getDataFromApi(url) {
-//   return fetch(url)
-//     .then((res) => {
-//       console.log(res);
-//       return res;
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// }
 
 function createArticle(project) {
   const article = document.createElement("article");
@@ -259,13 +272,37 @@ function deleteDataFromApi(url) {
 }
 
 function deleteArticle(elemArr, sectionUrl) {
+  // get the array of delete button and add event listener to each button
   elemArr.forEach((elem) => {
     elem.addEventListener("click", function () {
+      // get api data id from getDeleted id attribute we created
       const getElemId = elem.getAttribute("getDeleteId");
+      // construct new url using data id so as to delete specific article
       const url = `${sectionUrl}/${getElemId}`;
+
+      // call deleteDataFromApi using the new url, which returns a promise
       deleteDataFromApi(url).then((response) => {
         if (response.statusText == "OK") {
-          elem.parentElement.parentElement.remove()
+          const sectionUpdated = elem.parentElement.parentElement.parentElement;
+          // onsuccessful dalation from api, also remove the article elemnt
+          elem.parentElement.parentElement.remove();
+          // check if the div section to add post, has any available post
+          if (sectionUpdated.children.length == 0) {
+            // if no post, then create new paragraph with "no task" content 
+            const createNotask = document.createElement("p");
+            createNotask.textContent = "No task yet";
+            createNotask.classList.add("notask-text");
+            // add the paragraph to the empty div section
+            sectionUpdated.appendChild(createNotask);
+            // update the section header to 0 since it has no available post
+            sectionUpdated.parentElement.childNodes[1].firstElementChild.firstElementChild.textContent =
+              "0";
+          } else {
+            // otherwise update the section header to the number of children available
+            sectionUpdated.parentElement.childNodes[1].firstElementChild.firstElementChild.textContent =
+              sectionUpdated.children.length;
+          }
+          // sectionUpdated.childNodes[1].firstElementChild.firstElementChild.textContent
         } else {
           errorHandling("Unable to delete project. Try again later");
         }
@@ -285,7 +322,6 @@ function dragStart(allArticles) {
   allArticles.forEach((article) => {
     article.addEventListener("dragstart", function (event) {
       event.dataTransfer.setData("text/plain", article.id);
-      
     });
     article.addEventListener("dragend", function (event) {
       event.dataTransfer.clearData("text/plain");
@@ -295,7 +331,7 @@ function dragStart(allArticles) {
 
 // dropped element implementation
 
-function dropToTarget(targetSection,urlObj) {
+function dropToTarget(targetSection, urlObj) {
   targetSection.addEventListener("dragenter", function (e) {
     e.preventDefault();
     e.dataTransfer.setData("text/plain", targetSection.id);
@@ -316,16 +352,19 @@ function dropToTarget(targetSection,urlObj) {
 
     const [, elemId] = draggedElementId.split("-");
     const projectContent = {
-          type: getDraggedElement.childNodes[0].innerText,
-          title: getDraggedElement.childNodes[2].innerText,
-          description: getDraggedElement.childNodes[4].innerText
-        };
-   
-      postDataToApi(urlObj.url2,projectContent,targetSection);
-      deleteDataFromApi(`${urlObj.url1}/${elemId}`);
-      targetSection.style.backgroundColor = "var(--body-bg-color)";
-      getDraggedElement.remove();
+      type: getDraggedElement.childNodes[0].innerText,
+      title: getDraggedElement.childNodes[2].innerText,
+      description: getDraggedElement.childNodes[4].innerText,
+    };
 
+    postDataToApi(urlObj.url2, projectContent, targetSection);
+    deleteDataFromApi(`${urlObj.url1}/${elemId}`);
+    targetSection.style.backgroundColor = "var(--body-bg-color)";
+    const parentOfDrag = getDraggedElement.parentElement;
+    getDraggedElement.remove();
+    parentOfDrag.parentElement.firstElementChild.firstElementChild.firstElementChild.textContent =
+      parentOfDrag.children.length;
+    targetSection.parentElement.firstElementChild.firstElementChild.firstElementChild.textContent =
+      targetSection.children.length;
   });
 }
-

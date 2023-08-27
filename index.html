@@ -10,6 +10,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="./style.css" />
+    <script src="./approve.js" defer></script>
     <script src="./index.js" defer type="module"></script>
     <title>Kanban board</title>
   </head>
@@ -25,126 +26,43 @@
             <a class="add-btn" href="http://">+</a>
           </div>
           <div id="todo-section">
-            <article>
-              <p class="project-type">UI Design</p>
-              <h2 class="project-title">A/B Testing</h2>
-              <p class="project-content">
-                We cannot solve problems with the kind of thinking we employed
-                when...
-              </p>
-              <div class="line"></div>
-              <div class="flex-images">
-                <img src="./images/Frame 199.png" alt="" srcset="" />
-                <button>
-                  <img src="./images/trash.svg" alt="" srcset="" />
-                </button>
-              </div>
-            </article>
-            <article>
-              <p class="project-type">UI Design</p>
-              <h2 class="project-title">A/B Testing</h2>
-              <p class="project-content">
-                We cannot solve problems with the kind of thinking we employed
-                when...
-              </p>
-              <div class="line"></div>
-              <div class="flex-images">
-                <img src="./images/Frame 199.png" alt="" srcset="" />
-                <button>
-                  <img src="./images/trash.svg" alt="" srcset="" />
-                </button>
-              </div>
-            </article>
+
           </div>
         </section>
         <section>
-          <p class="section-head progress-link"
+          <div>
+            <p class="section-head progress-link"
             >In Progress<span style="background: var(--color-progress-fade)"
               >3</span
             >
         </p>
+          </div>
           <div id="in-progress-section">
-            <article>
-              <p class="project-type">UI Design</p>
-              <h2 class="project-title">A/B Testing</h2>
-              <p class="project-content">
-                We cannot solve problems with the kind of thinking we employed
-                when...
-              </p>
-              <div class="line"></div>
-              <div class="flex-images">
-                <img src="./images/Frame 199.png" alt="" srcset="" />
-                <button>
-                  <img src="./images/trash.svg" alt="" srcset="" />
-                </button>
-              </div>
-            </article>
+           
           </div>
         </section>
         <section>
-          <p class="section-head review-link"
+          <div>
+            <p class="section-head review-link"
             >In Review<span style="background: var(--color-review-fade)"
               >2</span
             ></p
           >
+          </div>
           <div id="in-review-section">
-            <article>
-              <p class="project-type">UI Design</p>
-              <h2 class="project-title">A/B Testing</h2>
-              <p class="project-content">
-                We cannot solve problems with the kind of thinking we employed
-                when...
-              </p>
-              <div class="line"></div>
-              <div class="flex-images">
-                <img src="./images/Frame 199.png" alt="" srcset="" />
-                <button>
-                  <img src="./images/trash.svg" alt="" srcset="" />
-                </button>
-              </div>
-            </article>
-            <article>
-              <p class="project-type">UI Design</p>
-              <h2 class="project-title">A/B Testing</h2>
-              <p class="project-content">
-                We cannot solve problems with the kind of thinking we employed
-                when...
-              </p>
-              <div class="line"></div>
-              <div class="flex-images">
-                <img src="./images/Frame 199.png" alt="" srcset="" />
-                <button>
-                  <img src="./images/trash.svg" alt="" srcset="" />
-                </button>
-              </div>
-            </article>
           </div>
         </section>
         <section>
-          <p class="section-head done-link"
+          <div>
+            <p class="section-head done-link"
             >Done<span style="background: var(--color-done-fade)">0</span></p
           >
+          </div>
           <div id="done-section"></div>
         </section>
       </div>
 
-      <!-- <div class="opacity-bg">  
-        </div> -->
-      <!-- <form action="" class="add-project-form">
-            <p class="form-header">Add project Todo</p>
-            <label for="project-type">Enter project type</label>
-            <input type="text" id="project-type">
-            <label for="project-title">Enter project title</label>
-            <input type="text" id="project-title" >
-            <label for="project-type">Describe the project</label>
-            <textarea name="" id="" cols="30" rows="10"></textarea>
-            <button type="submit" class="submit">Add project</button>
-        </form> -->
-      <!-- <form action="" class="verification-form">
-            <p class="form-header">Verify yourself</p>
-            <input id="verification" type="text">
-            <button type="submit" class="submit">Verify</button>
-        </form> -->
+    
     </main>
   </body>
 </html>
