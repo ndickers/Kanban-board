@@ -1,5 +1,6 @@
 import verificationKey from "./approve.js";
 
+
 window.addEventListener("DOMContentLoaded", fetchDataOnLoad);
 
 async function fetchDataOnLoad() {
