@@ -227,6 +227,12 @@ textarea {
   border-radius: 0.5rem;
   block-size: 10rem;
 }
+.notask-text{
+  margin-inline-end: auto;
+  margin-inline-start:1rem;
+  margin-block-start:1rem;
+  color: hsla(0, 1%, 50%, 1);
+}
 .submit {
   margin-block-start: 0.7rem;
   background: var(--color-done);
