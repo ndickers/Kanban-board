@@ -1,6 +1,5 @@
 import verificationKey from "./approve.js";
 
-
 window.addEventListener("DOMContentLoaded", fetchDataOnLoad);
 
 async function fetchDataOnLoad() {
@@ -99,7 +98,7 @@ async function loadApiData(url, sectionToAddArticle) {
       const newArticle = createArticle(data);
       // we then append the newly created article in the specified section(todo/in progress/in review /done)
       sectionToAddArticle.appendChild(newArticle);
-      // after appending article we remove the "no task" paragraph created and make 
+      // after appending article we remove the "no task" paragraph created and make
       // the new aticlem the fistchild element of the specified section
       noTaskP.remove();
       // update the section heading to with the number of children
@@ -113,6 +112,14 @@ async function loadApiData(url, sectionToAddArticle) {
 const addProjectBtn = document.querySelector(".add-btn");
 addProjectBtn.addEventListener("click", function (e) {
   e.preventDefault();
+  displayVerificationForm();
+  const verifyBtn = document.querySelector("#verify");
+  verifyBtn.addEventListener("click", function () {
+    displayInputProjectForm(addProjectBtn, form);
+  });
+});
+
+function displayVerificationForm() {
   const form = document.createElement("form");
   form.setAttribute("id", "form");
   form.innerHTML = verificationForm();
@@ -120,11 +127,7 @@ addProjectBtn.addEventListener("click", function (e) {
   main.append(opacityBg, form);
   form.addEventListener("submit", preventSubmission);
   opacityBg.addEventListener("click", removeFormAndBg);
-  const verifyBtn = document.querySelector("#verify");
-  verifyBtn.addEventListener("click", function () {
-    displayInputProjectForm(addProjectBtn, form);
-  });
-});
+}
 
 function displayInputProjectForm(elem, formSection) {
   const verifyCode = document.querySelector("#verification").value;
@@ -168,12 +171,15 @@ function opaqueBg() {
   const opacityBg = document.createElement("div");
   opacityBg.setAttribute("id", "bg-opacity");
   opacityBg.setAttribute("class", "opacity-bg");
+  document.body.style.overflow= "hidden";
+  
   return opacityBg;
 }
 
 function removeFormAndBg() {
   document.getElementById("form").remove();
   document.getElementById("bg-opacity").remove();
+  document.body.style.overflow = "scroll";
 }
 
 function addProjectFormContent() {
@@ -202,7 +208,6 @@ function addProject() {
   );
 }
 
-
 function postDataToApi(url, projectToPost, elementToAppend) {
   const requestObj = {
     method: "POST",
@@ -211,10 +216,10 @@ function postDataToApi(url, projectToPost, elementToAppend) {
   };
   fetch(url, requestObj).then((res) => {
     console.log(res);
-     // check if data is posted succesfully
+    // check if data is posted succesfully
     if (res.statusText == "Created") {
       res.json().then((data) => {
-      //  check if section to add article, has any available "notask" paragraph
+        //  check if section to add article, has any available "notask" paragraph
         if (elementToAppend.firstElementChild.nodeName == "P") {
           // if it has  a paragraph, create a new article using data posted to api
           // then replace the no task paragraph with new article
@@ -277,35 +282,50 @@ function deleteArticle(elemArr, sectionUrl) {
   elemArr.forEach((elem) => {
     elem.addEventListener("click", function () {
       // get api data id from getDeleted id attribute we created
-      const getElemId = elem.getAttribute("getDeleteId");
-      // construct new url using data id so as to delete specific article
-      const url = `${sectionUrl}/${getElemId}`;
+      displayVerificationForm();
+      const verifyDelete = document.querySelector("#verify");
+      verifyDelete.addEventListener("click", function () {
+        const verifyCode = document.querySelector("#verification").value;
+        if (verifyCode == verificationKey) {
+          const getElemId = elem.getAttribute("getDeleteId");
+          // construct new url using data id so as to delete specific article
+          const url = `${sectionUrl}/${getElemId}`;
 
-      // call deleteDataFromApi using the new url, which returns a promise
-      deleteDataFromApi(url).then((response) => {
-        if (response.statusText == "OK") {
-          const sectionUpdated = elem.parentElement.parentElement.parentElement;
-          // onsuccessful dalation from api, also remove the article elemnt
-          elem.parentElement.parentElement.remove();
-          // check if the div section to add post, has any available post
-          if (sectionUpdated.children.length == 0) {
-            // if no post, then create new paragraph with "no task" content 
-            const createNotask = document.createElement("p");
-            createNotask.textContent = "No task yet";
-            createNotask.classList.add("notask-text");
-            // add the paragraph to the empty div section
-            sectionUpdated.appendChild(createNotask);
-            // update the section header to 0 since it has no available post
-            sectionUpdated.parentElement.childNodes[1].firstElementChild.firstElementChild.textContent =
-              "0";
-          } else {
-            // otherwise update the section header to the number of children available
-            sectionUpdated.parentElement.childNodes[1].firstElementChild.firstElementChild.textContent =
-              sectionUpdated.children.length;
-          }
-          // sectionUpdated.childNodes[1].firstElementChild.firstElementChild.textContent
-        } else {
-          errorHandling("Unable to delete project. Try again later");
+          // call deleteDataFromApi using the new url, which returns a promise
+          deleteDataFromApi(url).then((response) => {
+            if (response.statusText == "OK") {
+              const sectionUpdated =
+                elem.parentElement.parentElement.parentElement;
+              // onsuccessful dalation from api, also remove the article elemnt
+              elem.parentElement.parentElement.remove();
+              // check if the div section to add post, has any available post
+              if (sectionUpdated.children.length == 0) {
+                // if no post, then create new paragraph with "no task" content
+                const createNotask = document.createElement("p");
+                createNotask.textContent = "No task yet";
+                createNotask.classList.add("notask-text");
+                // add the paragraph to the empty div section
+                sectionUpdated.appendChild(createNotask);
+                // update the section header to 0 since it has no available post
+                sectionUpdated.parentElement.childNodes[1].firstElementChild.firstElementChild.textContent =
+                  "0";
+              } else {
+                // otherwise update the section header to the number of children available
+                sectionUpdated.parentElement.childNodes[1].firstElementChild.firstElementChild.textContent =
+                  sectionUpdated.children.length;
+              }
+
+              // sectionUpdated.childNodes[1].firstElementChild.firstElementChild.textContent
+            } else {
+              errorHandling("Unable to delete project. Try again later");
+            }
+          });
+        }else{
+          form.style.animation = "shakeForm 1.2s linear";
+    document.getElementById("verification").style.animation =
+      "inputColorShake 1.2s linear";
+    document.querySelector(".submit").style.animation =
+      "btnBgColor 1.2s linear";
         }
       });
     });

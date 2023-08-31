@@ -3,7 +3,7 @@
   --white: hsla(0, 0%, 100%, 1);
   --very-dark: hsla(0, 0%, 13%, 1);
   --gray: hsla(0, 1%, 50%, 1);
-  --gray-section:hsla(0, 1%, 50%, 0.2);
+  --gray-section: hsla(0, 1%, 50%, 0.2);
   --body-bg-color: hsla(220, 43%, 97%, 1);
   --color-todo: hsla(220, 28%, 62%, 1);
   --color-todo-fade: hsla(220, 28%, 78%, 1);
@@ -44,24 +44,27 @@ h1 {
 section {
   inline-size: 18rem;
 }
-.flex-todo-heading{
+.flex-todo-heading {
   inline-size: 17.125rem;
   display: flex;
   flex-wrap: nowrap;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
 }
-#in-progress-section, #in-review-section,#todo-section,#done-section{
+#in-progress-section,
+#in-review-section,
+#todo-section,
+#done-section {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-inline-size: 17.125rem;
   inline-size: 100%;
   block-size: 100%;
-  border-radius:0.8rem;
+  border-radius: 0.8rem;
 }
 
-.section-head{
+.section-head {
   white-space: nowrap;
   display: inline-block;
   border-radius: 4rem;
@@ -71,23 +74,23 @@ section {
   color: var(--white);
   background: var(--color-todo);
 }
-.add-btn{
+.add-btn {
   display: block;
   text-decoration: none;
-  padding:0.5rem 0.65rem;
-  background-color:var(--white);
-  font-size:2.5rem;
-  color:var(--very-dark);
+  padding: 0.5rem 0.65rem;
+  background-color: var(--white);
+  font-size: 2.5rem;
+  color: var(--very-dark);
   border-radius: 100%;
 }
-.add-btn:hover{
+.add-btn:hover {
   background: var(--very-dark);
   color: var(--white);
 }
-.image-profile{
+.image-profile {
   inline-size: 2rem;
-  block-size:2rem;
-  background:black;
+  block-size: 2rem;
+  background: black;
   border-radius: 100%;
 }
 .progress-link {
@@ -148,31 +151,36 @@ button {
   background: none;
 }
 .opacity-bg {
-  inline-size: 100%;
-  block-size: 100%;
   background: var(--very-dark);
-  opacity: 0.4;
   position: absolute;
+  bottom: 0;
   left: 0;
+  right: 0;
   top: 0;
-  z-index: 1;
+  inline-size: 100%;
+  block-size: 1000%;
+  opacity: 0.6;
 }
 
 form {
-  border-radius: 1rem;
-  padding: 1rem;
   background: var(--white);
+  max-inline-size: 18rem;
+  block-size: 10rem;
   position: absolute;
-  z-index: 2;
-  max-inline-size: 17.25rem;
-  top: 20%;
   left: 0;
   right: 0;
+  top: 0;
+  bottom: 0;
   margin: auto;
-  
+  background-color: var(--white);
+  padding: 1rem;
+  border-radius: 1rem;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
 
-@keyframes shakeForm{
+@keyframes shakeForm {
   from,
   to {
     transform: none;
@@ -182,28 +190,25 @@ form {
   60%,
   80% {
     transform: translateX(10%);
-    
   }
   10%,
   30%,
   50%,
   90% {
     transform: translateX(-10%);
-    
   }
 }
-@keyframes inputColorShake{
-    
-     from,to{
-      border: solid 3px red;
-    }
-   
+@keyframes inputColorShake {
+  from,
+  to {
+    border: solid 3px red;
+  }
 }
-@keyframes btnBgColor{
-   
-    from,to{
-        background: red;
-      } 
+@keyframes btnBgColor {
+  from,
+  to {
+    background: red;
+  }
 }
 
 .form-header {
@@ -228,10 +233,10 @@ textarea {
   border-radius: 0.5rem;
   block-size: 10rem;
 }
-.notask-text{
+.notask-text {
   margin-inline-end: auto;
-  margin-inline-start:1rem;
-  margin-block-start:1rem;
+  margin-inline-start: 1rem;
+  margin-block-start: 1rem;
   color: hsla(0, 1%, 50%, 1);
 }
 .submit {
