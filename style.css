@@ -152,14 +152,14 @@ button {
 }
 .opacity-bg {
   background: var(--very-dark);
-  position: fixed;
+  position:fixed;
   bottom: 0;
   left: 0;
   right: 0;
   top: 0;
-  margin:auto;
-  inline-size: 100%;
-  block-size: 100%;
+  z-index: 1;
+  inline-size: 100vw;
+  block-size: 100vh;
   opacity: 0.6;
 }
 
@@ -167,10 +167,11 @@ form {
   background: var(--white);
   max-inline-size: 18rem;
   block-size: 10rem;
-  position: fixed;
+  position: absolute;
+  z-index: 2;
   left: 0;
-  right: 0;
   top: 0;
+  right: 0;
   bottom: 0;
   margin: auto;
   background-color: var(--white);
